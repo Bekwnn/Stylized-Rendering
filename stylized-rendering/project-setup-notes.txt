@@ -1,0 +1,3 @@
+- make sure the include directories are the same as the example projects
+- make sure the output properties are the same as the example projects
+- make sure the additional dependencies are the same under Linker/Input
