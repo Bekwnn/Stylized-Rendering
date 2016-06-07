@@ -85,10 +85,9 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Dependency/bgfx/3rdparty/lib/win32_vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
-      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,10 +118,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Dependency/bgfx/3rdparty/lib/win32_vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
-      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,7 +141,9 @@
     <ClCompile Include="..\..\Dependency\imgui\imgui.cpp" />
     <ClCompile Include="..\..\Dependency\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\..\Dependency\imgui\imgui_draw.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ApplicationH.cpp" />
+    <ClCompile Include="GLWindowH.cpp" />
+    <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dependency\assimp\code\assimp.vcxproj">
@@ -157,6 +157,8 @@
     <ClInclude Include="..\..\Dependency\imgui\imconfig.h" />
     <ClInclude Include="..\..\Dependency\imgui\imgui.h" />
     <ClInclude Include="..\..\Dependency\imgui\imgui_internal.h" />
+    <ClInclude Include="ApplicationH.h" />
+    <ClInclude Include="GLWindowH.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
