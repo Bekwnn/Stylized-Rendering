@@ -36,6 +36,12 @@
     <ClCompile Include="GLWindowH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ImGuiImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="STime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependency\imgui\imconfig.h">
@@ -51,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GLWindowH.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiImpl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STime.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -110,7 +110,7 @@ GLWindowH * ApplicationH::CreateGLWindowH(std::string winTitle, int width, int h
 	DescribePixelFormat(retWindow->hDc, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
 
 	retWindow->glC = wglCreateContext(retWindow->hDc);
-	bool bsuccess = wglMakeCurrent(retWindow->hDc, retWindow->glC);
+	wglMakeCurrent(retWindow->hDc, retWindow->glC);
 
 	windows.push_back(std::unique_ptr<GLWindowH>(retWindow));
 

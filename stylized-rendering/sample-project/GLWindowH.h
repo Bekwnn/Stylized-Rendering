@@ -3,6 +3,7 @@
 #pragma once
 #include <windows.h>
 #include <string>
+#include "STime.h"
 
 class GLWindowH
 {
@@ -14,5 +15,4 @@ public:
 	HWND hWnd; //WINAPI handle for the window
 	HDC hDc; //WINAPI handle for device context
 	HGLRC glC; //WINAPI handle for opengl context
-
 };

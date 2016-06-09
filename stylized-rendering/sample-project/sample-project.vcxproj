@@ -85,7 +85,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Dependency/bgfx/3rdparty/lib/win32_vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -118,7 +118,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Dependency/bgfx/3rdparty/lib/win32_vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -143,6 +143,8 @@
     <ClCompile Include="..\..\Dependency\imgui\imgui_draw.cpp" />
     <ClCompile Include="ApplicationH.cpp" />
     <ClCompile Include="GLWindowH.cpp" />
+    <ClCompile Include="ImGuiImpl.cpp" />
+    <ClCompile Include="STime.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +161,8 @@
     <ClInclude Include="..\..\Dependency\imgui\imgui_internal.h" />
     <ClInclude Include="ApplicationH.h" />
     <ClInclude Include="GLWindowH.h" />
+    <ClInclude Include="STime.h" />
+    <ClInclude Include="ImGuiImpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
