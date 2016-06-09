@@ -144,7 +144,9 @@
     <ClCompile Include="ApplicationH.cpp" />
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="STime.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,8 +163,10 @@
     <ClInclude Include="..\..\Dependency\imgui\imgui_internal.h" />
     <ClInclude Include="ApplicationH.h" />
     <ClInclude Include="GLWindowH.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="STime.h" />
     <ClInclude Include="ImGuiImpl.h" />
+    <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,8 @@
 #pragma once
-#include <ctime>
+#include <chrono>
+
+typedef std::chrono::time_point<std::chrono::steady_clock> TimePoint;
+typedef std::chrono::high_resolution_clock hrClock;
 
 class STime
 {
@@ -14,5 +17,5 @@ public:
 private:
 	static double deltaTime;
 	static double curTime;
-	static time_t lastTimer;
+	static TimePoint lastTimer;
 };

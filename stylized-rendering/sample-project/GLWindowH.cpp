@@ -10,3 +10,8 @@ GLWindowH::~GLWindowH()
 	wglDeleteContext(glC);
 	DestroyWindow(hWnd);
 }
+
+void GLWindowH::SetScene(Scene* scene)
+{
+	this->scene = std::unique_ptr<Scene>(scene);
+}

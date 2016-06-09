@@ -15,6 +15,8 @@
 #include "ApplicationH.h"
 
 #include "ImGuiImpl.h"
+#include "STime.h"
+#include "TestScene.h"
 
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -50,8 +52,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	ImGui_ImplGL3_Init(mainWindow);
 
-	static float f = 0.0f;
-	ImVec4 clear_color = ImColor(114, 144, 154);
+	mainWindow->SetScene(new TestScene());
+
+	STime::InitTime();
 
 	// Main message loop:
 	bool bflicker = false;
@@ -59,7 +62,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	GetMessage(&msg, mainWindow->hWnd, 0, 0);
 	while (msg.message != WM_QUIT) //add some && bGameIsPlaying bool to cond
 	{
-		//process win32 event messages
+		//process and remove win32 event messages
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -68,29 +71,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		//render update
 		else
 		{	
-			/*
-			if (bflicker)
-			{
-				glClearColor(0.0, 0.0, 1.0, 1.0);
-				bflicker = false;
-			}
-			else
-			{
-				glClearColor(0.0, 0.0, 0.8, 1.0);
-				bflicker = true;
-			}
-			*/
-			glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.z);
+			STime::UpdateDeltaTime();
+
+			glClearColor(0.0, 0.0, 0.0, 1.0);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			ImGui_ImplGL3_NewFrame();
+			mainWindow->scene->UpdateScene();
 
-			ImGui::Text("Hello, world!");
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-			ImGui::ColorEdit3("clear color", (float*)&clear_color);
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			
+			ImGui_ImplGL3_NewFrame();
+			mainWindow->scene->UpdateGUI();
 			ImGui::Render();
+
 			SwapBuffers(mainWindow->hDc);
 		}
 	}

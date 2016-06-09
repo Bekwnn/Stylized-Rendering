@@ -3,19 +3,17 @@
 double STime::curTime = 0.0;
 double STime::deltaTime = 1.0 / 60.0;
 float STime::globalTimeDilation = 1.0f;
-time_t STime::lastTimer = { 0 };
+TimePoint STime::lastTimer = hrClock::now();
 
 void STime::InitTime()
 {
-	time_t timer;
-	lastTimer = time(&timer);
+	lastTimer = std::chrono::high_resolution_clock::now();
 }
 
 void STime::UpdateDeltaTime()
 {
-	time_t timer;
-	time(&timer);
-	deltaTime = globalTimeDilation * difftime(timer, lastTimer);
+	auto now = hrClock::now();
+	deltaTime = ((std::chrono::duration<double>)(now - lastTimer)).count();
 	curTime += deltaTime;
-	lastTimer = timer;
+	lastTimer = now;
 }
