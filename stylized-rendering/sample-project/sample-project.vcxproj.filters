@@ -48,6 +48,9 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependency\imgui\imconfig.h">
@@ -60,22 +63,33 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="ApplicationH.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLWindowH.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiImpl.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="STime.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STime.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestScene.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\BlenderCreated\skeletree.blend">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

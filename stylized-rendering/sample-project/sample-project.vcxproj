@@ -76,17 +76,18 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>../../Dependency/bx/include/compat/msvc;../../Dependency/bx/include;../../Dependency/bgfx/include;../../Dependency/bgfx/3rdparty;../../Dependency/imgui;../../Dependency/assimp/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Dependency/imgui;../../Dependency/assimp/include;../../Dependency/glm;</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>BX_CONFIG_ENABLE_MSVC_LEVEL4_WARNINGS=1;__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/wd4201 /wd4324 /Ob2  %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Dependency/bgfx/3rdparty/lib/win32_vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -108,18 +109,19 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>../../Dependency/bx/include/compat/msvc;../../Dependency/bx/include;../../Dependency/bgfx/include;../../Dependency/bgfx/3rdparty;../../Dependency/imgui;../../Dependency/assimp/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Dependency/imgui;../../Dependency/assimp/include;../../Dependency/glm;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>BX_CONFIG_ENABLE_MSVC_LEVEL4_WARNINGS=1;__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/wd4201 /wd4324 /Ob2  %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;DelayImp.lib;gdi32.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Dependency/bgfx/3rdparty/lib/win32_vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -145,6 +147,7 @@
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="STime.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -153,20 +156,22 @@
     <ProjectReference Include="..\..\Dependency\assimp\code\assimp.vcxproj">
       <Project>{2c4ee892-cc75-3d89-a274-2f1c68dc6e82}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\Dependency\bgfx\.build\projects\vs2015\bgfx.vcxproj">
-      <Project>{6c90947c-58c7-950d-01b4-7b10edc9110f}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependency\imgui\imconfig.h" />
     <ClInclude Include="..\..\Dependency\imgui\imgui.h" />
     <ClInclude Include="..\..\Dependency\imgui\imgui_internal.h" />
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="ApplicationH.h" />
     <ClInclude Include="GLWindowH.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="STime.h" />
     <ClInclude Include="ImGuiImpl.h" />
     <ClInclude Include="TestScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\BlenderCreated\skeletree.blend" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

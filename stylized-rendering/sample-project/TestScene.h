@@ -6,7 +6,7 @@ class TestScene : public Scene
 {
 public:
 	TestScene();
-	~TestScene();
+	virtual ~TestScene();
 
 	void UpdateGUI() override;
 	void UpdateScene() override;
@@ -14,4 +14,5 @@ public:
 private:
 	ImVec4 clear_color;
 	float f;
+	std::string importSuccess;
 };

@@ -4,8 +4,6 @@
 #include <GL\GL.h>
 #include <GL\GLU.h>
 
-#include <assimp\vector3.h>
-#include <bgfx\bgfx.h>
 #include <imgui.h>
 
 #include <stdlib.h>
@@ -18,6 +16,9 @@
 #include "STime.h"
 #include "TestScene.h"
 
+#define WIN_WIDTH 1280
+#define WIN_HEIGHT 720
+
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -26,19 +27,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	//assimp
-	aiVector3D vec(0.0f, 0.0f, 0.0f);
-	vec += aiVector3D(1.0f, 1.0f, 1.0f);
-	//bgfx
-//	bgfx::init();
-	//bgfx::shutdown();
-	//imgui
-	//ImGui::Begin("This creates a UI window.");
-	
 	ApplicationH* app = ApplicationH::CreateApplicationH(hInstance, WndProc, _T("OpenGL"));
 
-	GLWindowH* mainWindow = app->CreateGLWindowH("Main Window", 1280, 720);
+	GLWindowH* mainWindow = app->CreateGLWindowH("Main Window", WIN_WIDTH, WIN_HEIGHT);
 
+	//INITIALIZE GLEW
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
@@ -46,14 +39,18 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		return 0;
 	}
 
+	//display window
 	ShowWindow(mainWindow->hWnd,
 		nCmdShow);
 	UpdateWindow(mainWindow->hWnd);
 
+	//INITIALIZE IMGUI
 	ImGui_ImplGL3_Init(mainWindow);
 
+	//INITIALIZE SCENE
 	mainWindow->SetScene(new TestScene());
 
+	//INITIALIZE SCENE TIME CLASS
 	STime::InitTime();
 
 	// Main message loop:
@@ -70,11 +67,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		}
 		//render update
 		else
-		{	
+		{
 			STime::UpdateDeltaTime();
-
-			glClearColor(0.0, 0.0, 0.0, 1.0);
-			glClear(GL_COLOR_BUFFER_BIT);
 
 			mainWindow->scene->UpdateScene();
 

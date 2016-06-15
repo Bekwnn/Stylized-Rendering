@@ -7,15 +7,15 @@ TestScene::TestScene()
 {
 	clear_color = ImColor(114, 144, 154);
 	f = 0.0f;
+	std::string blendFileStr = "../../../../BlenderCreated/skeletree.blend";
+	importSuccess = Import(blendFileStr);
 }
 
-TestScene::~TestScene()
-{
-}
+TestScene::~TestScene() {}
 
 void TestScene::UpdateGUI()
 {
-	ImGui::Text("Hello, world!");
+	ImGui::Text(importSuccess.c_str());
 	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 	ImGui::ColorEdit3("clear color", (float*)&clear_color);
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
