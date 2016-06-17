@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include <imgui.h>
 
 class TestScene : public Scene
 {

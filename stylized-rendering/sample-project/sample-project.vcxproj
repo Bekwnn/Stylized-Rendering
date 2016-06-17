@@ -143,7 +143,9 @@
     <ClCompile Include="..\..\Dependency\imgui\imgui.cpp" />
     <ClCompile Include="..\..\Dependency\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\..\Dependency\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ApplicationH.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -163,6 +165,7 @@
     <ClInclude Include="..\..\Dependency\imgui\imgui_internal.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ApplicationH.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="GLWindowH.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />

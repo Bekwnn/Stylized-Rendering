@@ -8,7 +8,8 @@ class STime
 {
 public:
 	static void InitTime();
-	static double GetDeltaTime() { return deltaTime; }
+	static double GetDoubleDeltaTime() { return deltaTime; }
+	static float  GetDeltaTime() { return (float)deltaTime; }
 	static double GetCurTime() { return curTime; }
 	static void UpdateDeltaTime();
 
