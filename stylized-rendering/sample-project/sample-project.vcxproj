@@ -148,10 +148,14 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshActor.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="STime.cpp" />
+    <ClCompile Include="TestActor.cpp" />
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="AssimpUtil.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,14 +171,20 @@
     <ClInclude Include="ApplicationH.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GLWindowH.h" />
+    <ClInclude Include="MeshActor.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="STime.h" />
     <ClInclude Include="ImGuiImpl.h" />
+    <ClInclude Include="TestActor.h" />
     <ClInclude Include="TestScene.h" />
+    <ClInclude Include="AssimpUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\BlenderCreated\skeletree.blend" />
+    <None Include="..\..\meshes\export\BeachSand.fbx" />
+    <None Include="frag.fs" />
+    <None Include="vert.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

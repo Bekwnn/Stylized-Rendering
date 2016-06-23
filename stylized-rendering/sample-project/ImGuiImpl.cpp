@@ -215,7 +215,7 @@ bool ImGui_ImplGL3_CreateDeviceObjects()
 
 	const GLchar *vertex_shader =
 		"#version 330\n"
-		"uniform mat4 ProjMtx;\n"
+		"uniform mat4x4 ProjMtx;\n"
 		"in vec2 Position;\n"
 		"in vec2 UV;\n"
 		"in vec4 Color;\n"

@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "MeshActor.h"
 
 class TestScene : public Scene
 {
@@ -11,6 +12,7 @@ public:
 	void UpdateScene() override;
 
 private:
+	MeshActor* meshActor;
 	ImVec4 clear_color;
 	float f;
 	std::string importSuccess;

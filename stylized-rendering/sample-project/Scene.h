@@ -4,8 +4,12 @@
 #include "STime.h" //for convenience
 #include <string>
 #include <vector>
+#include <memory>
 #include "Actor.h"
 #include "Camera.h"
+
+#include <assimp\Importer.hpp>
+#include <assimp\scene.h>
 
 class Scene
 {
@@ -13,9 +17,6 @@ public:
 	virtual void UpdateGUI() = 0;
 	virtual void UpdateScene();
 
-	//TODO: move elsewhere
-	std::string Import(std::string& pfile);
-
-	std::vector<Actor> sceneActors;
-	Camera camera;
+	std::vector<std::unique_ptr<Actor>> sceneActors;
+	std::unique_ptr<Camera> camera;
 };

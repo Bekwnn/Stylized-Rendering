@@ -18,8 +18,9 @@ Camera::Camera()
 	position = glm::vec3(0, 0, -5);
 	rotation = glm::quat(1, 0, 0, 0);
 	fovHalf = 45;
-	speed = 5;
-	nearClip = 1, farClip = 100;
+	speed = 5.0;
+	sensitivity = 0.2;
+	nearClip = 0.1, farClip = 10000;
 
 	cameraUp = glm::vec3(0, 1, 0);
 
@@ -31,13 +32,9 @@ Camera::~Camera()
 
 void Camera::Tick()
 {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	cameraLookAt = position + GetForwardVec();
-
 	mouseDelta = GetMousePos() - mousePrevious;
 
+	// FPS flythrough cam while mouse button held down
 	if (GetKeyState(VK_RBUTTON) & 0x8000 && rmbWasDown)
 	{
 		Movement();
@@ -52,9 +49,8 @@ void Camera::Tick()
 	}
 
 	mousePrevious = GetMousePos();
-
+	cameraLookAt = position + GetForwardVec();
 	UpdateVP();
-	glLoadMatrixf(glm::value_ptr(VP));
 }
 
 glm::mat4x4 Camera::GetMVP(glm::mat4x4 model)
@@ -108,5 +104,7 @@ void Camera::Movement()
 
 void Camera::FPSLook()
 {
-	//TODO: fps camera look
+	rotation = glm::angleAxis(glm::radians(-mouseDelta.x * sensitivity), cameraUp) * rotation;
+	//TODO: prevent further upwards/downwards look if already looking straight up/down
+	rotation = glm::angleAxis(glm::radians(-mouseDelta.y * sensitivity), GetRightVec()) * rotation;
 }

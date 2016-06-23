@@ -57,6 +57,18 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependency\imgui\imconfig.h">
@@ -95,9 +107,27 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\BlenderCreated\skeletree.blend">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="vert.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="frag.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\meshes\export\BeachSand.fbx">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
