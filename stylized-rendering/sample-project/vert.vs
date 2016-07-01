@@ -6,7 +6,6 @@ out vec3 fragmentColor;
 
 void main(){
 	gl_Position = MVP * vec4(vertexPosition_modelspace,1);
-	//gl_Position = vec4(vertexPosition_modelspace,1);
     // The color of each vertex will be interpolated
     // to produce the color of each fragment
     fragmentColor = vertexColor;

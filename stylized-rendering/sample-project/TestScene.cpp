@@ -7,17 +7,22 @@
 #include "TestScene.h"
 #include "TestActor.h"
 #include "AssimpUtil.h"
+#include "TexturedMesh.h"
 
 TestScene::TestScene()
 {
-	clear_color = ImColor(114, 144, 154);
+	clear_color = ImColor(142, 172, 246);
 	f = 0.0f;
+
 	std::string meshFileStr = "../../meshes/export/BeachSand.fbx";
-	meshActor = new MeshActor();
+	meshActor = new TexturedMesh();
+	meshActor->GenBuffers();
 	meshActor->scene = this;
 	importSuccess = meshActor->SetMesh(meshFileStr);
-	meshActor->SetShader("vert.vs", "frag.fs");
+	meshActor->SetShader("texvert.vs", "texfrag.fs");
+	meshActor->SetTexture("../../textures/uv_test_image.png");
 	sceneActors.push_back(std::unique_ptr<Actor>(meshActor));
+
 	camera = std::unique_ptr<Camera>(new Camera());
 }
 
@@ -36,10 +41,6 @@ void TestScene::UpdateGUI()
 	ImGui::Text("Camera Position: (%f, %f, %f)", camera->position.x, camera->position.y, camera->position.z);
 	glm::vec3 lookdir = camera->GetForwardVec();
 	ImGui::Text("Camera Look Dir: (%f, %f, %f)", lookdir.x, lookdir.y, lookdir.z);
-	for (int i = 0; i < 50; i++)
-	{
-		ImGui::Text("f%d: (%d, %d, %d)", i, mesh->mFaces[i].x, mesh->mFaces[i].y, mesh->mFaces[i].z);
-	}
 	ImGui::End();
 }
 

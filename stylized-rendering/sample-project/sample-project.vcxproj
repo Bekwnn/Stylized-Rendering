@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>../../Dependency/imgui;../../Dependency/assimp/include;../../Dependency/glm;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Dependency/stb_image;../../Dependency/imgui;../../Dependency/assimp/include;../../Dependency/glm;</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -109,7 +109,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>../../Dependency/imgui;../../Dependency/assimp/include;../../Dependency/glm;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Dependency/stb_image;../../Dependency/imgui;../../Dependency/assimp/include;../../Dependency/glm;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/wd4201 /wd4324 /Ob2  %(AdditionalOptions)</AdditionalOptions>
@@ -148,7 +148,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshActor.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
@@ -156,6 +155,7 @@
     <ClCompile Include="TestActor.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="AssimpUtil.cpp" />
+    <ClCompile Include="TexturedMesh.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,12 +179,18 @@
     <ClInclude Include="TestActor.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="AssimpUtil.h" />
+    <ClInclude Include="TexturedMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\BlenderCreated\skeletree.blend" />
     <None Include="..\..\meshes\export\BeachSand.fbx" />
     <None Include="frag.fs" />
+    <None Include="texfrag.fs" />
+    <None Include="texvert.vs" />
     <None Include="vert.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\textures\uv_test_image.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

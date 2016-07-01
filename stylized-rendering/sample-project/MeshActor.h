@@ -1,3 +1,4 @@
+#pragma once
 #include "Actor.h"
 
 #include <assimp\scene.h>
@@ -7,7 +8,13 @@ class MeshActor : public Actor
 {
 public:
 	MeshActor();
-	void Render() override;
+	virtual void Render() override;
+	virtual void GenBuffers();
+	virtual void FreeBuffers();
+	virtual void SetUniforms();
+	virtual void SetBufferData();
+	virtual void DrawBuffers();
+	virtual void CleanUp();
 	std::string SetMesh(std::string& pFile);
 	void SetShader(const char* vertProgram, const char* fragProgram);
 

@@ -22,6 +22,17 @@ namespace aiu
 		std::vector<glm::vec2> mUVCoords;
 	};
 
+	class Texture
+	{
+	public:
+		Texture();
+		Texture(const char* ifile);
+		~Texture();
+
+		int x, y, n;
+		unsigned char* data;
+	};
+
 	// returns string describing success, and mesh as out parameter
 	std::string Import(Mesh& mesh, std::string& pfile);
 }
