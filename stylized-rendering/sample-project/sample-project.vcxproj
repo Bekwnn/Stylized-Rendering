@@ -190,6 +190,9 @@
     <None Include="vert.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\textures\Sand_3_AO.png" />
+    <Image Include="..\..\textures\Sand_3_Diffuse.png" />
+    <Image Include="..\..\textures\Sand_3_Normal.png" />
     <Image Include="..\..\textures\uv_test_image.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

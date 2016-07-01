@@ -20,7 +20,7 @@ TestScene::TestScene()
 	meshActor->scene = this;
 	importSuccess = meshActor->SetMesh(meshFileStr);
 	meshActor->SetShader("texvert.vs", "texfrag.fs");
-	meshActor->SetTexture("../../textures/uv_test_image.png");
+	meshActor->SetTexture("../../textures/Sand_3_Diffuse.png");
 	sceneActors.push_back(std::unique_ptr<Actor>(meshActor));
 
 	camera = std::unique_ptr<Camera>(new Camera());

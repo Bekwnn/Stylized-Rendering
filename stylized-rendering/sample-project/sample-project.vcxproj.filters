@@ -144,5 +144,14 @@
     <Image Include="..\..\textures\uv_test_image.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\textures\Sand_3_AO.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\textures\Sand_3_Diffuse.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\textures\Sand_3_Normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

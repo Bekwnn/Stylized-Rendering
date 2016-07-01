@@ -29,7 +29,7 @@ void TexturedMesh::SetUniforms()
 	GLuint texWrapLocation = glGetUniformLocation(shaderProgram, "uvMultiplier");
 	if (texWrapLocation != -1)
 	{
-		glUniform1f(texWrapLocation, 2);
+		glUniform1f(texWrapLocation, 8);
 	}
 }
 
@@ -53,8 +53,8 @@ void TexturedMesh::SetBufferData()
 	glBindTexture(GL_TEXTURE_2D, mainTexID);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTextureStorage2D(mainTexID, 1, GL_RGBA8, mainTexture->x, mainTexture->y);
-	glTextureSubImage2D(mainTexID, 0, 0, 0, mainTexture->x, mainTexture->y, GL_RGBA, GL_UNSIGNED_BYTE, mainTexture->data);
+	glTextureStorage2D(mainTexID, 1, GL_RGB8, mainTexture->x, mainTexture->y);
+	glTextureSubImage2D(mainTexID, 0, 0, 0, mainTexture->x, mainTexture->y, GL_RGB, GL_UNSIGNED_BYTE, mainTexture->data);
 }
 
 void TexturedMesh::CleanUp()
