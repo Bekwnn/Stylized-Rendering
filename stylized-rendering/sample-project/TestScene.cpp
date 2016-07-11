@@ -5,23 +5,32 @@
 #include <assimp\scene.h>
 
 #include "TestScene.h"
-#include "TestActor.h"
 #include "AssimpUtil.h"
-#include "TexturedMesh.h"
 
 TestScene::TestScene()
 {
 	clear_color = ImColor(142, 172, 246);
 	f = 0.0f;
 
-	std::string meshFileStr = "../../meshes/export/BeachSand.fbx";
-	meshActor = new TexturedMesh();
-	meshActor->GenBuffers();
-	meshActor->scene = this;
-	importSuccess = meshActor->SetMesh(meshFileStr);
-	meshActor->SetShader("texvert.vs", "texfrag.fs");
-	meshActor->SetTexture("../../textures/Sand_3_Diffuse.png");
-	sceneActors.push_back(std::unique_ptr<Actor>(meshActor));
+	std::string beachMeshFileStr = "../../meshes/export/BeachSand.fbx";
+	beachMesh = new TexturedMesh();
+	beachMesh->scene = this;
+	importSuccess = beachMesh->SetMesh(beachMeshFileStr);
+	beachMesh->SetShader("texvert.vs", "texfrag.fs");
+	beachMesh->SetTexture("../../textures/Sand_3_Diffuse.png");
+	beachMesh->SetNormal("../../textures/Sand_3_Normal.png");
+	beachMesh->GenBuffers();
+	sceneActors.push_back(std::unique_ptr<Actor>(beachMesh));
+
+	std::string oceanMeshFileStr = "../../meshes/export/OceanGrid.fbx";
+	oceanMesh = new OceanMesh();
+	oceanMesh->scene = this;
+	importSuccess = oceanMesh->SetMesh(oceanMeshFileStr);
+	oceanMesh->SetShader("oceanvert.vs", "oceanfrag.fs");
+	oceanMesh->SetOceanDepthTexture("../../textures/OceanDepthMap.png");
+	oceanMesh->SetFlowMapTexture("../../textures/OceanFlowMap.png");
+	oceanMesh->GenBuffers();
+	sceneActors.push_back(std::unique_ptr<Actor>(oceanMesh));
 
 	camera = std::unique_ptr<Camera>(new Camera());
 }
@@ -31,10 +40,14 @@ TestScene::~TestScene() {}
 void TestScene::UpdateGUI()
 {
 	ImGui::Begin("Debug");
-	aiu::Mesh* mesh = &meshActor->mesh;
+	aiu::Mesh* mesh = &beachMesh->mesh;
 	ImGui::Text(importSuccess.c_str());
 	ImGui::Text("Mesh Vertices: %d", mesh->mVertices.size());
 	ImGui::ColorEdit3("clear color", (float*)&clear_color);
+	ImGui::DragFloat("Spec Mul", &beachMesh->specMul, 0.05f, 0.f, 0.5f);
+	ImGui::DragFloat("Spec Pow", &beachMesh->specPow, 0.5f, 0.f, 50.f);
+	ImGui::Checkbox("Normal Map", &beachMesh->normalMapped);
+	ImGui::DragFloat3("Light Position", &beachMesh->lightPosition[0], 10.f, -1000.f, 1000.f);
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::Text("CurrentTime: %.3f seconds", STime::GetCurTime());
 	ImGui::Checkbox("RMB Down", &(camera->rmbWasDown));

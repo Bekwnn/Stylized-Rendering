@@ -10,7 +10,6 @@ public:
 
 	virtual void Tick() override;
 
-	glm::mat4x4 GetMVP(glm::mat4x4 Model);
 	void UpdateVP();
 	glm::vec2 GetMousePos();
 	void Movement();
@@ -31,6 +30,5 @@ public:
 
 	glm::mat4x4 view;
 	glm::mat4x4 projection;
-	
 	glm::mat4x4 VP;
 };

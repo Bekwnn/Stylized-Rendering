@@ -1,12 +1,13 @@
 #version 330 core
-uniform mat4x4 MVP;
 layout(location = 0) in vec3 vertexPosition_modelspace;
-layout(location = 1) in vec3 vertexColor;
+
 out vec3 fragmentColor;
 
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
 void main(){
-	gl_Position = MVP * vec4(vertexPosition_modelspace,1);
-    // The color of each vertex will be interpolated
-    // to produce the color of each fragment
-    fragmentColor = vertexColor;
+	gl_Position = projection * view * model * vec4(vertexPosition_modelspace,1);
+    fragmentColor = vec3(1,1,1);
 }

@@ -19,10 +19,16 @@ public:
 	void SetShader(const char* vertProgram, const char* fragProgram);
 
 	aiu::Mesh mesh;
-	glm::mat4 mvp;
+	glm::mat4 model;
+	glm::vec3 lightPosition;
 
 	GLuint vao;
 	GLuint shaderProgram;
 	GLuint elementBuffer;
 	GLuint vertexBuffer;
+	GLuint normalBuffer;
+	GLuint tangentBuffer;
+	GLuint bitangentBuffer;
+
+	bool normalMapped;
 };

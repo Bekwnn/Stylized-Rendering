@@ -17,17 +17,32 @@ Mesh::Mesh(aiMesh* aimesh)
 	//PER VERT
 	int vertCount = aimesh->mNumVertices;
 	mVertices = std::vector<glm::vec3>(vertCount);
+	mNormals = std::vector<glm::vec3>(vertCount);
+	mTangents = std::vector<glm::vec3>(vertCount);
+	mBitangents = std::vector<glm::vec3>(vertCount);
 	mUVCoords = std::vector<glm::vec2>(vertCount);
 	for (int vertIdx = 0; vertIdx < vertCount; vertIdx++)
 	{
 		mVertices[vertIdx] = glm::make_vec3(&aimesh->mVertices[vertIdx][0]);
 
-		// Check for texture coordinates
+		if (aimesh->HasNormals())
+		{
+			mNormals[vertIdx] = glm::make_vec3(&aimesh->mNormals[vertIdx][0]);
+		}
+
+		// Check first uv mapping channel (0) for texture coordinates
 		if (aimesh->HasTextureCoords(0))
 		{
 			mUVCoords[vertIdx] = glm::make_vec2(&aimesh->mTextureCoords[0][vertIdx][0]);
 		}
+
+		if (aimesh->HasTangentsAndBitangents())
+		{
+			mTangents[vertIdx] = glm::make_vec3(&aimesh->mTangents[vertIdx][0]);
+			mBitangents[vertIdx] = glm::make_vec3(&aimesh->mBitangents[vertIdx][0]);
+		}
 	}
+
 	//PER FACE
 	int faceCount = aimesh->mNumFaces;
 	mFaces = std::vector<glm::ivec3>(faceCount);
@@ -42,7 +57,7 @@ Texture::Texture()
 
 Texture::Texture(const char* ifile)
 {
-	data = stbi_load(ifile, &x, &y, &n, 0);
+	data = stbi_load(ifile, &x, &y, &n, 4); //forces 4 8 bit components for rgba
 }
 
 Texture::~Texture()

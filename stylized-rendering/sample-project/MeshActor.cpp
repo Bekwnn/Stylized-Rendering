@@ -4,6 +4,8 @@
 #include <GL\GL.h>
 #include <GL\GLU.h>
 
+#include <glm\gtc\type_ptr.hpp>
+
 #include "ShaderLoader.h"
 #include "Scene.h"
 
@@ -12,6 +14,7 @@
 
 MeshActor::MeshActor()
 {
+	lightPosition = glm::vec3(0.f, 20.f, 0.f);
 	scale = glm::vec3(1, 1, 1);
 }
 
@@ -31,6 +34,9 @@ void MeshActor::GenBuffers()
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &elementBuffer);
 	glGenBuffers(1, &vertexBuffer);
+	glGenBuffers(1, &normalBuffer);
+	glGenBuffers(1, &tangentBuffer);
+	glGenBuffers(1, &bitangentBuffer);
 }
 
 void MeshActor::FreeBuffers()
@@ -43,13 +49,35 @@ void MeshActor::FreeBuffers()
 
 void MeshActor::SetUniforms()
 {
-	// attempt setting an MVP matrix in shader
-	GLuint MVPMatrixID = glGetUniformLocation(shaderProgram, "MVP");
-	if (MVPMatrixID != -1)
+	// attempt setting M, V, P, VP matrices in shader
+	GLint modelMatID = glGetUniformLocation(shaderProgram, "model");
+	if (modelMatID != -1)
 	{
-		glm::mat4 m = GetModelMatrix();
-		mvp = scene->camera->GetMVP(m);
-		glUniformMatrix4fv(MVPMatrixID, 1, GL_FALSE, &mvp[0][0]);
+		glUniformMatrix4fv(modelMatID, 1, GL_FALSE, glm::value_ptr(model));
+	}
+
+	GLint viewMatID = glGetUniformLocation(shaderProgram, "view");
+	if (viewMatID != -1)
+	{
+		glUniformMatrix4fv(viewMatID, 1, GL_FALSE, glm::value_ptr(scene->camera->view));
+	}
+
+	GLint projMatID = glGetUniformLocation(shaderProgram, "projection");
+	if (projMatID != -1)
+	{
+		glUniformMatrix4fv(projMatID, 1, GL_FALSE, glm::value_ptr(scene->camera->projection));
+	}
+
+	GLint VPMatID = glGetUniformLocation(shaderProgram, "view_projection");
+	if (VPMatID != -1)
+	{
+		glUniformMatrix4fv(VPMatID, 1, GL_FALSE, glm::value_ptr(scene->camera->VP));
+	}
+
+	GLint lightPosLocation = glGetUniformLocation(shaderProgram, "lightPos");
+	if (lightPosLocation != -1)
+	{
+		glUniform3fv(lightPosLocation, 1, &lightPosition[0]);
 	}
 }
 
@@ -75,7 +103,39 @@ void MeshActor::SetBufferData()
 		GL_STATIC_DRAW
 	);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	// set array buffer with normals
+	glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+	glBufferData(
+		GL_ARRAY_BUFFER,
+		mesh.mNormals.size() * sizeof(glm::vec3),
+		mesh.mNormals.data(),
+		GL_STATIC_DRAW
+		);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	// tangents
+	glBindBuffer(GL_ARRAY_BUFFER, tangentBuffer);
+	glBufferData(
+		GL_ARRAY_BUFFER,
+		mesh.mTangents.size() * sizeof(glm::vec3),
+		mesh.mTangents.data(),
+		GL_STATIC_DRAW
+		);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, bitangentBuffer);
+	glBufferData(
+		GL_ARRAY_BUFFER,
+		mesh.mBitangents.size() * sizeof(glm::vec3),
+		mesh.mBitangents.data(),
+		GL_STATIC_DRAW
+		);
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }
 
 void MeshActor::DrawBuffers()
@@ -91,6 +151,9 @@ void MeshActor::DrawBuffers()
 void MeshActor::CleanUp()
 {
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
 }
 
 std::string MeshActor::SetMesh(std::string & pFile)

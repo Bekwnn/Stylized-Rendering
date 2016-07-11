@@ -1,10 +1,29 @@
-#version 330 core
-uniform mat4x4 MVP;
-layout(location = 0) in vec3 vertexPosition_modelspace;
-layout(location = 1) in vec2 vertUV;
-out vec2 fragUV;
+#version 430 core
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec3 tangent;
+layout (location = 3) in vec3 bitangent;
+layout (location = 4) in vec2 texCoords;
 
-void main(){
-	gl_Position = MVP * vec4(vertexPosition_modelspace,1);
-    fragUV = vertUV;
+out VertexData {
+    vec3 FragPos;
+    vec3 Normal;
+	vec3 Tangent;
+	vec3 Bitangent;
+    vec2 TexCoords;
+} vsData;
+
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model;
+
+void main()
+{
+    gl_Position = projection * view * model * vec4(position, 1);
+
+    vsData.FragPos = vec3(model * vec4(position, 1.0));
+    vsData.Normal = (model * vec4(normal, 1)).xyz;
+	vsData.Tangent = (model * vec4(tangent, 1)).xyz;
+	vsData.Bitangent = (model * vec4(bitangent, 1)).xyz;
+    vsData.TexCoords = texCoords;
 }

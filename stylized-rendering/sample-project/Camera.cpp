@@ -53,11 +53,6 @@ void Camera::Tick()
 	UpdateVP();
 }
 
-glm::mat4x4 Camera::GetMVP(glm::mat4x4 model)
-{
-	return projection * view * model;
-}
-
 void Camera::UpdateVP()
 {
 	glGetIntegerv(GL_VIEWPORT, viewport);

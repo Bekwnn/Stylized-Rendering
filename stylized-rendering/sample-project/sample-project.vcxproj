@@ -149,10 +149,10 @@
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
     <ClCompile Include="MeshActor.cpp" />
+    <ClCompile Include="OceanMesh.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="STime.cpp" />
-    <ClCompile Include="TestActor.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="AssimpUtil.cpp" />
     <ClCompile Include="TexturedMesh.cpp" />
@@ -172,11 +172,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GLWindowH.h" />
     <ClInclude Include="MeshActor.h" />
+    <ClInclude Include="OceanMesh.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="STime.h" />
     <ClInclude Include="ImGuiImpl.h" />
-    <ClInclude Include="TestActor.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="AssimpUtil.h" />
     <ClInclude Include="TexturedMesh.h" />
@@ -184,12 +184,17 @@
   <ItemGroup>
     <None Include="..\..\..\..\BlenderCreated\skeletree.blend" />
     <None Include="..\..\meshes\export\BeachSand.fbx" />
+    <None Include="..\..\meshes\export\OceanGrid.fbx" />
     <None Include="frag.fs" />
+    <None Include="oceanfrag.fs" />
+    <None Include="oceanvert.vs" />
     <None Include="texfrag.fs" />
     <None Include="texvert.vs" />
     <None Include="vert.vs" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\textures\OceanDepthMap.png" />
+    <Image Include="..\..\textures\OceanFlowMap.png" />
     <Image Include="..\..\textures\Sand_3_AO.png" />
     <Image Include="..\..\textures\Sand_3_Diffuse.png" />
     <Image Include="..\..\textures\Sand_3_Normal.png" />

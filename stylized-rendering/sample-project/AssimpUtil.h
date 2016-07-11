@@ -18,6 +18,9 @@ namespace aiu
 		Mesh(aiMesh* aimesh);
 
 		std::vector<glm::vec3> mVertices;
+		std::vector<glm::vec3> mNormals;
+		std::vector<glm::vec3> mTangents;
+		std::vector<glm::vec3> mBitangents;
 		std::vector<glm::ivec3> mFaces;
 		std::vector<glm::vec2> mUVCoords;
 	};

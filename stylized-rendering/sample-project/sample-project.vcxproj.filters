@@ -57,9 +57,6 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestActor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AssimpUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TexturedMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OceanMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,9 +107,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestActor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AssimpUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -117,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TexturedMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OceanMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -139,6 +139,15 @@
     <None Include="texvert.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\meshes\export\OceanGrid.fbx">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="oceanvert.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="oceanfrag.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\textures\uv_test_image.png">
@@ -151,6 +160,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\textures\Sand_3_Normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\textures\OceanDepthMap.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\textures\OceanFlowMap.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
