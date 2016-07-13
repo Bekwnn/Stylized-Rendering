@@ -7,7 +7,8 @@
 #include "TestScene.h"
 #include "AssimpUtil.h"
 
-TestScene::TestScene()
+TestScene::TestScene() :
+	Scene::Scene()
 {
 	clear_color = ImColor(142, 172, 246);
 	f = 0.0f;
@@ -29,6 +30,8 @@ TestScene::TestScene()
 	oceanMesh->SetShader("oceanvert.vs", "oceanfrag.fs");
 	oceanMesh->SetOceanDepthTexture("../../textures/OceanDepthMap.png");
 	oceanMesh->SetFlowMapTexture("../../textures/OceanFlowMap.png");
+	oceanMesh->SetNormalMapTexture("../../textures/OceanNormal.png");
+	oceanMesh->SetPerlinTexture("../../textures/PerlinNoise.png");
 	oceanMesh->GenBuffers();
 	sceneActors.push_back(std::unique_ptr<Actor>(oceanMesh));
 
@@ -43,11 +46,11 @@ void TestScene::UpdateGUI()
 	aiu::Mesh* mesh = &beachMesh->mesh;
 	ImGui::Text(importSuccess.c_str());
 	ImGui::Text("Mesh Vertices: %d", mesh->mVertices.size());
-	ImGui::ColorEdit3("clear color", (float*)&clear_color);
-	ImGui::DragFloat("Spec Mul", &beachMesh->specMul, 0.05f, 0.f, 0.5f);
-	ImGui::DragFloat("Spec Pow", &beachMesh->specPow, 0.5f, 0.f, 50.f);
-	ImGui::Checkbox("Normal Map", &beachMesh->normalMapped);
-	ImGui::DragFloat3("Light Position", &beachMesh->lightPosition[0], 10.f, -1000.f, 1000.f);
+	ImGui::ColorEdit3("Sky", (float*)&clear_color);
+	ImGui::ColorEdit3("Wave Crest", (float*)&oceanMesh->waveCrest[0]);
+	ImGui::ColorEdit3("Wave Valley", (float*)&oceanMesh->waveValley[0]);
+	ImGui::DragFloat("Wave Height", &oceanMesh->waveHeight, 0.05f, 0.0f, 2.0f);
+	ImGui::DragFloat3("Light Position", &light[0], 5.f, -1000.f, 1000.f);
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::Text("CurrentTime: %.3f seconds", STime::GetCurTime());
 	ImGui::Checkbox("RMB Down", &(camera->rmbWasDown));

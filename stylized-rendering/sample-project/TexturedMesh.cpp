@@ -67,12 +67,6 @@ void TexturedMesh::SetUniforms()
 		glUniform1i(glGetUniformLocation(shaderProgram, "useNormalMapping"), 0);
 	}
 
-	GLint viewPosLocation = glGetUniformLocation(shaderProgram, "viewPos");
-	if (viewPosLocation != -1)
-	{
-		glUniform3fv(viewPosLocation, 1, &scene->camera->position[0]);
-	}
-
 	GLint texWrapLocation = glGetUniformLocation(shaderProgram, "uvMultiplier");
 	if (texWrapLocation != -1)
 	{

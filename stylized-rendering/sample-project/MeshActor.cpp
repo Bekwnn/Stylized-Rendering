@@ -14,7 +14,6 @@
 
 MeshActor::MeshActor()
 {
-	lightPosition = glm::vec3(0.f, 20.f, 0.f);
 	scale = glm::vec3(1, 1, 1);
 }
 
@@ -77,7 +76,13 @@ void MeshActor::SetUniforms()
 	GLint lightPosLocation = glGetUniformLocation(shaderProgram, "lightPos");
 	if (lightPosLocation != -1)
 	{
-		glUniform3fv(lightPosLocation, 1, &lightPosition[0]);
+		glUniform3fv(lightPosLocation, 1, &scene->light[0]);
+	}
+
+	GLint viewPosLocation = glGetUniformLocation(shaderProgram, "viewPos");
+	if (viewPosLocation != -1)
+	{
+		glUniform3fv(viewPosLocation, 1, &scene->camera->position[0]);
 	}
 }
 

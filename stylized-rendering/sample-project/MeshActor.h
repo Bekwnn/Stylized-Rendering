@@ -20,7 +20,6 @@ public:
 
 	aiu::Mesh mesh;
 	glm::mat4 model;
-	glm::vec3 lightPosition;
 
 	GLuint vao;
 	GLuint shaderProgram;

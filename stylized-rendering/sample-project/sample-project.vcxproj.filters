@@ -168,5 +168,11 @@
     <Image Include="..\..\textures\OceanFlowMap.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\textures\OceanNormal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\textures\PerlinNoise.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
