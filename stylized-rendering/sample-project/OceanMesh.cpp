@@ -1,15 +1,18 @@
 #include "OceanMesh.h"
 #include "STime.h"
+#include "Scene.h"
 
 OceanMesh::OceanMesh() :
 	MeshActor::MeshActor()
 {
 	maxDepth = 30.f;
 	waveHeight = 0.1f;
-	waveCrest = glm::vec3(5, 100, 170);
+	waveCrest = glm::vec3(40, 90, 170);
 	waveValley = glm::vec3(8, 52, 140);
+	skyColor = glm::vec3(142, 172, 246);
 	waveCrest *= 1.f / 255.f;
 	waveValley *= 1.f / 255.f;
+	skyColor *= 1.f / 255.f;
 }
 
 void OceanMesh::GenBuffers()
@@ -44,8 +47,18 @@ void OceanMesh::GenBuffers()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// PERLIN NOISE
+	// OCEAN NORMAL MAP
 	glActiveTexture(GL_TEXTURE3);
+	glGenTextures(1, &oceanNormalMapAltID);
+	glBindTexture(GL_TEXTURE_2D, oceanNormalMapAltID);
+	glTextureStorage2D(oceanNormalMapAltID, 1, GL_RGBA8_SNORM, oceanNormalMapAlt->x, oceanNormalMapAlt->y);
+	glTextureSubImage2D(oceanNormalMapAltID, 0, 0, 0, oceanNormalMapAlt->x, oceanNormalMapAlt->y, GL_RGBA, GL_UNSIGNED_BYTE, oceanNormalMapAlt->data);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	// PERLIN NOISE
+	glActiveTexture(GL_TEXTURE4);
 	glGenTextures(1, &perlinID);
 	glBindTexture(GL_TEXTURE_2D, perlinID);
 	glTextureStorage2D(perlinID, 1, GL_RGBA8, perlinNoise->x, perlinNoise->y);
@@ -74,10 +87,16 @@ void OceanMesh::SetUniforms()
 		glUniform1i(normalMapLocation, 2);
 	}
 
+	GLint normalMapAltLocation = glGetUniformLocation(shaderProgram, "waveNormalAlt");
+	if (normalMapAltLocation != -1)
+	{
+		glUniform1i(normalMapAltLocation, 3);
+	}
+
 	GLint perlinLocation = glGetUniformLocation(shaderProgram, "perlin");
 	if (perlinLocation != -1)
 	{
-		glUniform1i(perlinLocation, 3);
+		glUniform1i(perlinLocation, 4);
 	}
 
 	GLint waveHeightLocation = glGetUniformLocation(shaderProgram, "waveHeight");
@@ -103,6 +122,12 @@ void OceanMesh::SetUniforms()
 	{
 		glUniform3fv(valleyLocation, 1, &waveValley[0]);
 	}
+
+	GLint skyLocation = glGetUniformLocation(shaderProgram, "skyColor");
+	if (skyLocation != -1)
+	{
+		glUniform3fv(skyLocation, 1, &skyColor[0]);
+	}
 }
 
 void OceanMesh::SetBufferData()
@@ -116,6 +141,8 @@ void OceanMesh::SetBufferData()
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, oceanNormalMapID);
 	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, oceanNormalMapAltID);
+	glActiveTexture(GL_TEXTURE4);
 	glBindTexture(GL_TEXTURE_2D, perlinID);
 
 	// set uv data
@@ -150,6 +177,11 @@ void OceanMesh::SetFlowMapTexture(const char * ifile)
 void OceanMesh::SetNormalMapTexture(const char * ifile)
 {
 	oceanNormalMap = new aiu::Texture(ifile);
+}
+
+void OceanMesh::SetNormalMapAltTexture(const char * ifile)
+{
+	oceanNormalMapAlt = new aiu::Texture(ifile);
 }
 
 void OceanMesh::SetPerlinTexture(const char * ifile)

@@ -31,6 +31,7 @@ TestScene::TestScene() :
 	oceanMesh->SetOceanDepthTexture("../../textures/OceanDepthMap.png");
 	oceanMesh->SetFlowMapTexture("../../textures/OceanFlowMap.png");
 	oceanMesh->SetNormalMapTexture("../../textures/OceanNormal.png");
+	oceanMesh->SetNormalMapAltTexture("../../textures/OceanNormal2.png");
 	oceanMesh->SetPerlinTexture("../../textures/PerlinNoise.png");
 	oceanMesh->GenBuffers();
 	sceneActors.push_back(std::unique_ptr<Actor>(oceanMesh));
@@ -46,7 +47,7 @@ void TestScene::UpdateGUI()
 	aiu::Mesh* mesh = &beachMesh->mesh;
 	ImGui::Text(importSuccess.c_str());
 	ImGui::Text("Mesh Vertices: %d", mesh->mVertices.size());
-	ImGui::ColorEdit3("Sky", (float*)&clear_color);
+	ImGui::ColorEdit3("Sky", (float*)&oceanMesh->skyColor[0]);
 	ImGui::ColorEdit3("Wave Crest", (float*)&oceanMesh->waveCrest[0]);
 	ImGui::ColorEdit3("Wave Valley", (float*)&oceanMesh->waveValley[0]);
 	ImGui::DragFloat("Wave Height", &oceanMesh->waveHeight, 0.05f, 0.0f, 2.0f);
@@ -62,7 +63,7 @@ void TestScene::UpdateGUI()
 
 void TestScene::UpdateScene()
 {
-	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+	glClearColor(oceanMesh->skyColor.x, oceanMesh->skyColor.y, oceanMesh->skyColor.z, 1);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -196,6 +196,7 @@
     <Image Include="..\..\textures\OceanDepthMap.png" />
     <Image Include="..\..\textures\OceanFlowMap.png" />
     <Image Include="..\..\textures\OceanNormal.png" />
+    <Image Include="..\..\textures\OceanNormal2.png" />
     <Image Include="..\..\textures\PerlinNoise.png" />
     <Image Include="..\..\textures\Sand_3_AO.png" />
     <Image Include="..\..\textures\Sand_3_Diffuse.png" />

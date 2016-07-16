@@ -27,6 +27,7 @@ void main()
     if(useNormalMapping)
 	{
         vec3 mapNormal = texture2D(normalMap, fsInData.TexCoords * uvMultiplier).rgb;
+		mapNormal = (2*mapNormal)-1;
 		mapNormal = normalize(mapNormal);
         mat3 TBN = mat3(
 			normalize(fsInData.Tangent),
