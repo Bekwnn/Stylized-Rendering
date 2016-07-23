@@ -17,7 +17,7 @@ TestScene::TestScene() :
 	beachMesh = new TexturedMesh();
 	beachMesh->scene = this;
 	importSuccess = beachMesh->SetMesh(beachMeshFileStr);
-	beachMesh->SetShader("texvert.vs", "texfrag.fs");
+	beachMesh->SetShader("Shaders/textured.vs", "Shaders/textured.fs");
 	beachMesh->SetTexture("../../textures/Sand_3_Diffuse.png");
 	beachMesh->SetNormal("../../textures/Sand_3_Normal.png");
 	beachMesh->GenBuffers();
@@ -27,7 +27,7 @@ TestScene::TestScene() :
 	oceanMesh = new OceanMesh();
 	oceanMesh->scene = this;
 	importSuccess = oceanMesh->SetMesh(oceanMeshFileStr);
-	oceanMesh->SetShader("oceanvert.vs", "oceanfrag.fs");
+	oceanMesh->SetShader("Shaders/ocean.vs", "Shaders/ocean.fs");
 	oceanMesh->SetOceanDepthTexture("../../textures/OceanDepthMap.png");
 	oceanMesh->SetFlowMapTexture("../../textures/OceanFlowMap.png");
 	oceanMesh->SetNormalMapTexture("../../textures/OceanNormal.png");

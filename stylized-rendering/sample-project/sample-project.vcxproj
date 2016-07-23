@@ -182,15 +182,16 @@
     <ClInclude Include="TexturedMesh.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\BlenderCreated\skeletree.blend" />
     <None Include="..\..\meshes\export\BeachSand.fbx" />
     <None Include="..\..\meshes\export\OceanGrid.fbx" />
-    <None Include="frag.fs" />
-    <None Include="oceanfrag.fs" />
-    <None Include="oceanvert.vs" />
-    <None Include="texfrag.fs" />
-    <None Include="texvert.vs" />
-    <None Include="vert.vs" />
+    <None Include="Shaders\basic.fs" />
+    <None Include="Shaders\basic.vs" />
+    <None Include="Shaders\ocean.fs" />
+    <None Include="Shaders\ocean.vs" />
+    <None Include="Shaders\shadowmap.fs" />
+    <None Include="Shaders\shadowmap.vs" />
+    <None Include="Shaders\textured.fs" />
+    <None Include="Shaders\textured.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\textures\OceanDepthMap.png" />

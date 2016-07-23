@@ -55,7 +55,7 @@ void main()
 
 	//wave highlight
 	vec3 viewDir = normalize(viewPos - fsInData.FragPos);
-	float mixVal = fsInData.WaveHeight01 * pow((1 - abs(dot(viewDir, macroNormal))), 4);
+	float mixVal = fsInData.WaveHeight01 * pow((1 - abs(dot(viewDir, macroNormal))), 8);
 	vec3 color = mix(waveValleyColor, waveCrestColor, mixVal);
 
 	//ambient
@@ -73,7 +73,7 @@ void main()
 	vec3 specular = vec3(0.5) * spec;
 
 	// Fresnel
-	float fresnel = 1.0 - dot(viewDir, normal);
+	float fresnel = 1.0 - abs(dot(viewDir, normal));
 	fresnel = pow(fresnel, 3) * 0.65;
 	vec3 seaColor = mix(ambient + diffuse, skyColor, 0.2); // base level mixing of sky and sea color
 	vec3 finalColor = mix(seaColor, skyColor, fresnel); //fresnel increases sky color

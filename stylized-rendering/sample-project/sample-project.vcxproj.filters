@@ -16,6 +16,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{da1ecc19-09a4-4f8b-ab8d-ebedbc1be26b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2a55481a-676a-431d-98e1-05f6f7bc3102}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Dependency\imgui\imgui.cpp">
@@ -121,32 +124,35 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\BlenderCreated\skeletree.blend">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="vert.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="frag.fs">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\..\meshes\export\BeachSand.fbx">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="texfrag.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="texvert.vs">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\..\meshes\export\OceanGrid.fbx">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="oceanvert.vs">
-      <Filter>Resource Files</Filter>
+    <None Include="Shaders\basic.fs">
+      <Filter>Shaders</Filter>
     </None>
-    <None Include="oceanfrag.fs">
-      <Filter>Resource Files</Filter>
+    <None Include="Shaders\basic.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ocean.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\ocean.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowmap.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowmap.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\textured.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\textured.vs">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
