@@ -21,6 +21,7 @@ public:
 	glm::vec3 scale;
 
 	virtual void Tick() {};
+	virtual void ShadowPass() {};
 	virtual void Render() {};
 
 	void SetPosition(glm::vec3 val);

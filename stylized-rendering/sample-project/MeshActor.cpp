@@ -28,6 +28,45 @@ void MeshActor::Render()
 	FreeBuffers();
 }
 
+void MeshActor::ShadowPass()
+{
+	glUseProgram(shadowProgram);
+
+	glm::vec3 lightInvDir = glm::normalize(position - scene->light); //may have to flip
+
+	// Compute the MVP matrix from the light's point of view
+	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10, 10, -10, 10, -10, 20);
+	glm::mat4 depthViewMatrix = glm::lookAt(lightInvDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 depthModelMatrix = GetModelMatrix();
+	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
+
+	// Send our transformation to the currently bound shader,
+	// in the "MVP" uniform
+	GLint depthMatrixID = glGetUniformLocation(shaderProgram, "depthMVP");
+	if (depthMatrixID != -1)
+	{
+		glUniformMatrix4fv(depthMatrixID, 1, GL_FALSE, &depthMVP[0][0]);
+	}
+
+	// set array buffer with vertex positions
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(
+		GL_ARRAY_BUFFER,
+		mesh.mVertices.size() * sizeof(glm::vec3),
+		mesh.mVertices.data(),
+		GL_STATIC_DRAW
+	);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glDrawElements(
+		GL_TRIANGLES,
+		mesh.mFaces.size() * 3,
+		GL_UNSIGNED_INT,
+		NULL
+	);
+}
+
 void MeshActor::GenBuffers()
 {
 	glGenVertexArrays(1, &vao);
@@ -83,6 +122,25 @@ void MeshActor::SetUniforms()
 	if (viewPosLocation != -1)
 	{
 		glUniform3fv(viewPosLocation, 1, &scene->camera->position[0]);
+	}
+
+	GLint useShadowLoc = glGetUniformLocation(shaderProgram, "useShadowMapping");
+	if (useShadowLoc != -1)
+	{
+		if (isShadowed) glUniform1i(useShadowLoc, 1);
+		else glUniform1i(useShadowLoc, 0);
+	}
+
+	GLint depthBiasLoc = glGetUniformLocation(shaderProgram, "depthBiasMVP");
+	if (depthBiasLoc != -1)
+	{
+		glUniformMatrix4fv(depthBiasLoc, 1, GL_FALSE, /*TODO*/);
+	}
+
+	GLint depthTexLocation = glGetUniformLocation(shaderProgram, "shadowMap");
+	if (depthTexLocation != -1)
+	{
+		glUniform1i(depthTexLocation, depthTexture);
 	}
 }
 

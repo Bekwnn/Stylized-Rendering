@@ -19,6 +19,11 @@ void Scene::UpdateScene()
 
 	for (auto& actor : sceneActors)
 	{
+		actor->ShadowPass();
+	}
+
+	for (auto& actor : sceneActors)
+	{
 		actor->Render();
 	}
 }

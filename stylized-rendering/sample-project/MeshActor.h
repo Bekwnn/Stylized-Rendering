@@ -9,6 +9,7 @@ class MeshActor : public Actor
 public:
 	MeshActor();
 	virtual void Render() override;
+	virtual void ShadowPass() override;
 	virtual void GenBuffers();
 	virtual void FreeBuffers();
 	virtual void SetUniforms();
@@ -23,11 +24,16 @@ public:
 
 	GLuint vao;
 	GLuint shaderProgram;
+	GLuint shadowProgram;
 	GLuint elementBuffer;
 	GLuint vertexBuffer;
 	GLuint normalBuffer;
 	GLuint tangentBuffer;
 	GLuint bitangentBuffer;
 
+	GLuint depthTexture;
+
 	bool normalMapped;
+	bool castsShadow;
+	bool isShadowed;
 };

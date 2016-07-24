@@ -11,23 +11,19 @@ out VertexData {
 	vec3 Tangent;
 	vec3 Bitangent;
     vec2 TexCoords;
-	vec3 ShadowCoords; //stores texture coords in xy, depth in z
 } vsData;
 
 uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
-uniform mat4 depthBiasMVP;
-
 void main()
 {
     gl_Position = projection * view * model * vec4(position, 1);
 
-    vsData.FragPos = vec3(model * vec4(position, 1));
+    vsData.FragPos = vec3(model * vec4(position, 1.0));
     vsData.Normal = (model * vec4(normal, 1)).xyz;
 	vsData.Tangent = (model * vec4(tangent, 1)).xyz;
 	vsData.Bitangent = (model * vec4(bitangent, 1)).xyz;
     vsData.TexCoords = texCoords;
-	vsData.ShadowCoords = depthBiasMVP * vec4(position, 1);
 }
