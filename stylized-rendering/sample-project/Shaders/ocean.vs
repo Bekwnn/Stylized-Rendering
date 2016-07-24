@@ -5,9 +5,8 @@ layout (location = 2) in vec3 tangent;
 layout (location = 3) in vec3 bitangent;
 layout (location = 4) in vec2 texCoords;
 
-layout (location = 0) uniform sampler2D oceanDepth;
-layout (location = 1) uniform float time;
-layout (location = 2) uniform float waveHeight;
+layout (location = 0) uniform float time;
+layout (location = 1) uniform float waveHeight;
 
 out VertexData {
     vec3 FragPos;

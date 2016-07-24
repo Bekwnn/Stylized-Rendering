@@ -11,6 +11,7 @@ in VertexData {
 	float Time;
 } fsInData;
 
+layout(location = 2) uniform sampler2D oceanDepth;
 layout(location = 3)  uniform sampler2D flowMap;
 layout(location = 4)  uniform sampler2D waveNormal;
 layout(location = 5)  uniform sampler2D waveNormalAlt;
@@ -49,8 +50,12 @@ void main()
 	vec3 newNormal = TBN * mapNormal;
 	vec3 normal = normalize(newNormal);
 
-	//vec2 texCoordsFixed = vec2(fsInData.TexCoords.x, 1.0-fsInData.TexCoords.y);
-	//float depth = texture2D(oceanDepth, texCoordsFixed).b;
+	//store depth and flow map values
+	vec2 texCoordsFixed = vec2(fsInData.TexCoords.x, 1.0-fsInData.TexCoords.y);
+	float depth = texture2D(oceanDepth, texCoordsFixed).r;
+	depth = clamp(depth + fsInData.WaveHeight01 * 0.1, 0.0, 1.0);
+	float nearShoreBlend = clamp((depth-0.95)*20, 0.0, 1.0);
+	normal = mix(normal, macroNormal, nearShoreBlend*0.5);
 	//vec2 flow = texture2D(flowMap, texCoordsFixed).rg;
 
 	//wave highlight
@@ -77,7 +82,11 @@ void main()
 	fresnel = pow(fresnel, 3) * 0.65;
 	vec3 seaColor = mix(ambient + diffuse, skyColor, 0.2); // base level mixing of sky and sea color
 	vec3 finalColor = mix(seaColor, skyColor, fresnel); //fresnel increases sky color
+
+	// Shore transparency
+	float alpha = 1 - pow((depth * abs(dot(viewDir, macroNormal))), 4);
+	//finalColor = mix(finalColor, vec3(0.9,0.9,0.9), nearShoreBlend*0.5);
 	
 	//FragColor = vec4(vec3(dot(viewDir, normal)),1);
-	FragColor = vec4(finalColor + specular, 1);
+	FragColor = vec4(finalColor + specular, 0.2 + alpha);
 }

@@ -155,6 +155,9 @@ void OceanMesh::SetBufferData()
 		);
 	glEnableVertexAttribArray(4);
 	glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void OceanMesh::CleanUp()
