@@ -18,9 +18,12 @@ public:
 	virtual void CleanUp();
 	std::string SetMesh(std::string& pFile);
 	void SetShader(const char* vertProgram, const char* fragProgram);
+	void SetShadowShader(const char* vertProgram, const char* fragProgram);
 
 	aiu::Mesh mesh;
 	glm::mat4 model;
+	glm::mat4 depthBiasMVP;
+	static glm::mat4 biasMatrix;
 
 	GLuint vao;
 	GLuint shaderProgram;
@@ -30,8 +33,6 @@ public:
 	GLuint normalBuffer;
 	GLuint tangentBuffer;
 	GLuint bitangentBuffer;
-
-	GLuint depthTexture;
 
 	bool normalMapped;
 	bool castsShadow;

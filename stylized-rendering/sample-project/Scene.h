@@ -21,4 +21,7 @@ public:
 	std::vector<std::unique_ptr<Actor>> sceneActors;
 	std::unique_ptr<Camera> camera;
 	glm::vec3 light;
+
+	GLuint shadowFrameBuffer;
+	GLuint depthTexture;
 };

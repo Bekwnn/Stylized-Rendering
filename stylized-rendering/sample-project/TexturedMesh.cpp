@@ -9,6 +9,7 @@ TexturedMesh::TexturedMesh() :
 {
 	specPow = 32.f;
 	specMul = 0.2f;
+	normalMapped = true;
 }
 
 void TexturedMesh::GenBuffers()

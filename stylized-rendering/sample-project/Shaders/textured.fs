@@ -7,7 +7,7 @@ in VertexData {
 	vec3 Tangent;
 	vec3 Bitangent;
     vec2 TexCoords;
-
+	vec3 ShadowCoords;
 } fsInData;
 
 
@@ -44,9 +44,9 @@ void main()
 	float shadowMult = 1.0;
 	if (useShadowMapping)
 	{
-		if (texture2D(shadowMap, fsInData.ShadowCoord.xy).z  <  fsInData.ShadowCoord.z)
+		if (texture2D(shadowMap, fsInData.ShadowCoords.xy).z  <  fsInData.ShadowCoords.z)
 		{
-			shadowMult = 0.0;
+			shadowMult = 0.6;
 		}
 	}
 	
@@ -58,7 +58,7 @@ void main()
     vec3 ambient = 0.1 * color;
 
     // Diffuse
-    vec3 lightDir = normalize(lightPos - fsInData.FragPos);
+    vec3 lightDir = normalize(lightPos);
     float diff = max(dot(lightDir, normal), 0.0);
     vec3 diffuse = diff * color;
 

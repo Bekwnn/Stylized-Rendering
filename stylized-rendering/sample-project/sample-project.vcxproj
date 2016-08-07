@@ -152,7 +152,6 @@
     <ClCompile Include="OceanMesh.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
-    <ClCompile Include="ShadowedMesh.cpp" />
     <ClCompile Include="STime.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="AssimpUtil.cpp" />
@@ -176,7 +175,6 @@
     <ClInclude Include="OceanMesh.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
-    <ClInclude Include="ShadowedMesh.h" />
     <ClInclude Include="STime.h" />
     <ClInclude Include="ImGuiImpl.h" />
     <ClInclude Include="TestScene.h" />
@@ -185,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\meshes\export\BeachSand.fbx" />
+    <None Include="..\..\meshes\export\Cube.fbx" />
     <None Include="..\..\meshes\export\OceanGrid.fbx" />
     <None Include="foliage.fs" />
     <None Include="foliage.vs" />

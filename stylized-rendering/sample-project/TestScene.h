@@ -13,6 +13,7 @@ public:
 	void UpdateScene() override;
 
 private:
+	MeshActor* cubeMesh;
 	TexturedMesh* beachMesh;
 	OceanMesh* oceanMesh;
 	ImVec4 clear_color;

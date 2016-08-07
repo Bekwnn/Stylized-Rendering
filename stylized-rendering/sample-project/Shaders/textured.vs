@@ -29,5 +29,5 @@ void main()
 	vsData.Tangent = (model * vec4(tangent, 1)).xyz;
 	vsData.Bitangent = (model * vec4(bitangent, 1)).xyz;
     vsData.TexCoords = texCoords;
-	vsData.ShadowCoords = depthBiasMVP * vec4(position, 1);
+	vsData.ShadowCoords = vec3(depthBiasMVP * vec4(position, 1));
 }

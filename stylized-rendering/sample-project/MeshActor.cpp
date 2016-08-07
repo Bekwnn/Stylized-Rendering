@@ -5,6 +5,7 @@
 #include <GL\GLU.h>
 
 #include <glm\gtc\type_ptr.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 #include "ShaderLoader.h"
 #include "Scene.h"
@@ -12,9 +13,19 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+glm::mat4 MeshActor::biasMatrix = glm::mat4(
+	0.5, 0.0, 0.0, 0.0,
+	0.0, 0.5, 0.0, 0.0,
+	0.0, 0.0, 0.5, 0.0,
+	0.5, 0.5, 0.5, 1.0
+	);
+
 MeshActor::MeshActor()
 {
 	scale = glm::vec3(1, 1, 1);
+	castsShadow = false;
+	isShadowed = false;
+	normalMapped = false;
 }
 
 void MeshActor::Render()
@@ -30,23 +41,38 @@ void MeshActor::Render()
 
 void MeshActor::ShadowPass()
 {
+	if (!castsShadow) return;
+
 	glUseProgram(shadowProgram);
 
-	glm::vec3 lightInvDir = glm::normalize(position - scene->light); //may have to flip
-
 	// Compute the MVP matrix from the light's point of view
-	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10, 10, -10, 10, -10, 20);
-	glm::mat4 depthViewMatrix = glm::lookAt(lightInvDir, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-40, 40, -40, 40, -40, 40);
+	glm::mat4 depthViewMatrix = glm::lookAt(scene->light, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	glm::mat4 depthModelMatrix = GetModelMatrix();
 	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
 
-	// Send our transformation to the currently bound shader,
-	// in the "MVP" uniform
-	GLint depthMatrixID = glGetUniformLocation(shaderProgram, "depthMVP");
+	// compute depthbiasMVP for actual shading step later
+	depthBiasMVP = biasMatrix*depthMVP;
+
+	// set MVP in shadow shader
+	GLint depthMatrixID = glGetUniformLocation(shadowProgram, "depthMVP");
 	if (depthMatrixID != -1)
 	{
 		glUniformMatrix4fv(depthMatrixID, 1, GL_FALSE, &depthMVP[0][0]);
 	}
+
+	FreeBuffers();
+
+	glBindVertexArray(vao);
+
+	// set element buffer with face indices
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+	glBufferData(
+		GL_ELEMENT_ARRAY_BUFFER,
+		mesh.mFaces.size() * sizeof(glm::ivec3),
+		mesh.mFaces.data(),
+		GL_STATIC_DRAW
+		);
 
 	// set array buffer with vertex positions
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -55,16 +81,21 @@ void MeshActor::ShadowPass()
 		mesh.mVertices.size() * sizeof(glm::vec3),
 		mesh.mVertices.data(),
 		GL_STATIC_DRAW
-	);
+		);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
+	// draw by index
 	glDrawElements(
 		GL_TRIANGLES,
 		mesh.mFaces.size() * 3,
 		GL_UNSIGNED_INT,
 		NULL
 	);
+
+	glDisableVertexAttribArray(0);
+
+	FreeBuffers();
 }
 
 void MeshActor::GenBuffers()
@@ -88,6 +119,7 @@ void MeshActor::FreeBuffers()
 void MeshActor::SetUniforms()
 {
 	// attempt setting M, V, P, VP matrices in shader
+	model = GetModelMatrix();
 	GLint modelMatID = glGetUniformLocation(shaderProgram, "model");
 	if (modelMatID != -1)
 	{
@@ -127,26 +159,36 @@ void MeshActor::SetUniforms()
 	GLint useShadowLoc = glGetUniformLocation(shaderProgram, "useShadowMapping");
 	if (useShadowLoc != -1)
 	{
-		if (isShadowed) glUniform1i(useShadowLoc, 1);
+		if (isShadowed)
+		{
+			glUniform1i(useShadowLoc, 1);
+			
+		}
 		else glUniform1i(useShadowLoc, 0);
 	}
 
 	GLint depthBiasLoc = glGetUniformLocation(shaderProgram, "depthBiasMVP");
 	if (depthBiasLoc != -1)
 	{
-		glUniformMatrix4fv(depthBiasLoc, 1, GL_FALSE, /*TODO*/);
+		glUniformMatrix4fv(depthBiasLoc, 1, GL_FALSE, glm::value_ptr(depthBiasMVP));
 	}
 
 	GLint depthTexLocation = glGetUniformLocation(shaderProgram, "shadowMap");
 	if (depthTexLocation != -1)
 	{
-		glUniform1i(depthTexLocation, depthTexture);
+		glUniform1i(depthTexLocation, 10);
 	}
 }
 
 void MeshActor::SetBufferData()
 {
 	glBindVertexArray(vao);
+
+	if (isShadowed)
+	{
+		glActiveTexture(GL_TEXTURE10);
+		glBindTexture(GL_TEXTURE_2D, scene->depthTexture);
+	}
 
 	// set element buffer with face indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
@@ -190,6 +232,7 @@ void MeshActor::SetBufferData()
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
+	// binormals
 	glBindBuffer(GL_ARRAY_BUFFER, bitangentBuffer);
 	glBufferData(
 		GL_ARRAY_BUFFER,
@@ -227,4 +270,9 @@ std::string MeshActor::SetMesh(std::string & pFile)
 void MeshActor::SetShader(const char* vertProgram, const char* fragProgram)
 {
 	shaderProgram = ShaderLoader::CompileVertFrag(vertProgram, fragProgram);
+}
+
+void MeshActor::SetShadowShader(const char * vertProgram, const char * fragProgram)
+{
+	shadowProgram = ShaderLoader::CompileVertFrag(vertProgram, fragProgram);
 }

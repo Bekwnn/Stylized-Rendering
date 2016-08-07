@@ -72,9 +72,6 @@
     <ClCompile Include="OceanMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowedMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependency\imgui\imconfig.h">
@@ -125,9 +122,6 @@
     <ClInclude Include="OceanMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowedMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\meshes\export\BeachSand.fbx">
@@ -165,6 +159,9 @@
     </None>
     <None Include="foliage.fs">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\meshes\export\Cube.fbx">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
