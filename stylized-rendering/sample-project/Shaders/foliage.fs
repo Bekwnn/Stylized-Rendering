@@ -10,18 +10,17 @@ in VertexData {
 	vec3 ShadowCoords;
 } fsInData;
 
-
 layout(location = 0) uniform sampler2D diffuseMap;
-layout(location = 1) uniform sampler2D normalMap;  
-layout(location = 2) uniform sampler2D shadowMap;  
+layout(location = 1) uniform sampler2D normalMap;    
+layout(location = 2) uniform sampler2D shadowMap;
 
-layout(location = 3) uniform vec3 lightPos;
-layout(location = 4) uniform vec3 viewPos;
-layout(location = 5) uniform float uvMultiplier;
-layout(location = 6) uniform float specPower;
-layout(location = 7) uniform float specMultiplier;
-layout(location = 8) uniform bool useNormalMapping;
-layout(location = 9) uniform bool useShadowMapping;
+uniform vec3 lightPos;
+uniform vec3 viewPos;
+uniform float uvMultiplier;
+uniform float specPower;
+uniform float specMultiplier;
+uniform bool useNormalMapping;
+uniform bool useShadowMapping;
 
 vec2 poissonDisk[11] = vec2[](
 	vec2(0.5827442f, 0.0891116f),
@@ -43,7 +42,7 @@ void main()
 	vec3 normal = normalize(fsInData.Normal);
     if(useNormalMapping)
 	{
-        vec3 mapNormal = texture2D(normalMap, fsInData.TexCoords * uvMultiplier).rgb;
+        vec3 mapNormal = texture2D(normalMap, vec2(1) - fsInData.TexCoords).rgb;
 		mapNormal = (2*mapNormal)-1;
 		mapNormal = normalize(mapNormal);
         mat3 TBN = mat3(
@@ -55,23 +54,24 @@ void main()
 		normal = normalize(newNormal);
     }
 	
-    vec3 lightDir = normalize(lightPos);
+	vec4 diffuseSample = texture2D(diffuseMap, vec2(1) - fsInData.TexCoords);
+    vec3 color = diffuseSample.rgb;
+	float alpha = diffuseSample.a;
+	if (alpha < 0.3)
+		discard;
+
+	vec3 lightDir = normalize(lightPos);
 	float shadowMult = 1.0;
 	if (useShadowMapping)
 	{
 		for (int i = 0; i < 11; i++)
 		{
-			float texZ = texture2D(shadowMap, fsInData.ShadowCoords.xy + poissonDisk[i] * 0.002).z;
-			if (texZ  <  fsInData.ShadowCoords.z - 0.001)
+			if (texture2D(shadowMap, fsInData.ShadowCoords.xy + poissonDisk[i]).z  <  fsInData.ShadowCoords.z - 0.001)
 			{
 				shadowMult -= 0.05;
 			}
 		}
 	}
-	
-    vec4 texCol = texture2D(diffuseMap, fsInData.TexCoords * uvMultiplier);
-	vec3 color = texCol.rgb;
-	float alpha = texCol.a;
 
 	// Ambient
     vec3 ambient = 0.1 * color;
@@ -86,6 +86,15 @@ void main()
 	vec3 halfwayDir = normalize(lightDir + viewDir);  
 	float spec = pow(max(dot(normal, halfwayDir), 0.0), specPower);
 	vec3 specular = vec3(specMultiplier) * spec;
-    
-    FragColor = vec4(ambient + (diffuse + specular) * shadowMult, alpha);
+
+	//alpha based on view
+    float vdotn = abs(dot(viewDir, normal));
+	//if (vdotn < 0.1)
+	//	discard;
+	//else if (vdotn < 0.35)
+	//	alpha = alpha * ((vdotn - 0.1) * 4); //second term is 0-1
+
+    FragColor = vec4(ambient + diffuse + specular, alpha);
+	//FragColor = vec4(vec3(vdotn), 1.f);
+	
 }

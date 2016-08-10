@@ -26,7 +26,7 @@ void Scene::UpdateScene()
 	//set depth texture for shadowmapping
 	glActiveTexture(GL_TEXTURE10); // SHADOW MAP IS IN TEXTURE 10, DO NOT USE
 	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 1024, 1024, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 2048, 2048, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -40,7 +40,7 @@ void Scene::UpdateScene()
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		printf("blah");
 
-	glViewport(0, 0, 1024, 1024); //opengl renders at viewport resolution
+	glViewport(0, 0, 2048, 2048); //opengl renders at viewport resolution
 	for (auto& actor : sceneActors)
 	{
 		actor->ShadowPass();

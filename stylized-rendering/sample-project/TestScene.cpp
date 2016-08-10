@@ -10,6 +10,7 @@
 TestScene::TestScene() :
 	Scene::Scene()
 {
+	light = glm::vec3(1.f, 1.f, 1.f);
 	clear_color = ImColor(142, 172, 246);
 	f = 0.0f;
 
@@ -23,13 +24,12 @@ TestScene::TestScene() :
 	cubeMesh->GenBuffers();
 	sceneActors.push_back(std::unique_ptr<Actor>(cubeMesh));
 
-
 	std::string beachMeshFileStr = "../../meshes/export/BeachSand.fbx";
 	beachMesh = new TexturedMesh();
 	beachMesh->scene = this;
 	importSuccess = beachMesh->SetMesh(beachMeshFileStr);
 	beachMesh->isShadowed = true;
-	beachMesh->castsShadow = true;
+	beachMesh->normalMapped = true;
 	beachMesh->SetShadowShader("Shaders/shadowmap.vs", "Shaders/shadowmap.fs");
 	beachMesh->SetShader("Shaders/textured.vs", "Shaders/textured.fs");
 	beachMesh->SetTexture("../../textures/Sand_3_Diffuse.png");
@@ -40,7 +40,6 @@ TestScene::TestScene() :
 	std::string oceanMeshFileStr = "../../meshes/export/OceanGrid.fbx";
 	oceanMesh = new OceanMesh();
 	oceanMesh->scene = this;
-	oceanMesh->castsShadow = true;
 	oceanMesh->SetShadowShader("Shaders/shadowmap.vs", "Shaders/shadowmap.fs");
 	importSuccess = oceanMesh->SetMesh(oceanMeshFileStr);
 	oceanMesh->SetShader("Shaders/ocean.vs", "Shaders/ocean.fs");
@@ -51,6 +50,32 @@ TestScene::TestScene() :
 	oceanMesh->SetPerlinTexture("../../textures/PerlinNoise.png");
 	oceanMesh->GenBuffers();
 	sceneActors.push_back(std::unique_ptr<Actor>(oceanMesh));
+
+	std::string bushMeshFileStr = "../../meshes/export/BushA.fbx";
+	bushMesh = new BushMesh();
+	bushMesh->SetPosition(glm::vec3(-5.f, 0.75f, -4.f));
+	bushMesh->scene = this;
+	bushMesh->SetMesh(bushMeshFileStr);
+	bushMesh->castsShadow = true;
+	bushMesh->SetShadowShader("Shaders/smfoliage.vs", "Shaders/smfoliage.fs");
+	bushMesh->SetShader("Shaders/foliage.vs", "Shaders/foliage.fs");
+	bushMesh->SetTexture("../../textures/BushDiffuse.png");
+	bushMesh->SetStiffMap("../../textures/BushStiffness.png");
+	bushMesh->GenBuffers();
+	sceneActors.push_back(std::unique_ptr<Actor>(bushMesh));
+
+	//std::string bushMeshFileStr = "../../meshes/export/BushA.fbx";
+	bushMesh2 = new BushMesh();
+	bushMesh2->SetPosition(glm::vec3(-5.f, 0.75f, -5.f));
+	bushMesh2->scene = this;
+	bushMesh2->SetMesh(bushMeshFileStr);
+	bushMesh2->castsShadow = true;
+	bushMesh2->SetShadowShader("Shaders/smfoliage.vs", "Shaders/smfoliage.fs");
+	bushMesh2->SetShader("Shaders/foliage.vs", "Shaders/foliage.fs");
+	bushMesh2->SetTexture("../../textures/BushDiffuse.png");
+	bushMesh2->SetStiffMap("../../textures/BushStiffness.png");
+	bushMesh2->GenBuffers();
+	sceneActors.push_back(std::unique_ptr<Actor>(bushMesh2));
 
 	camera = std::unique_ptr<Camera>(new Camera());
 }
@@ -68,6 +93,7 @@ void TestScene::UpdateGUI()
 	ImGui::ColorEdit3("Wave Valley", (float*)&oceanMesh->waveValley[0]);
 	ImGui::DragFloat("Wave Height", &oceanMesh->waveHeight, 0.05f, 0.0f, 2.0f);
 	ImGui::DragFloat3("Box Position", &cubeMesh->position[0], 0.5f, -10.f, 10.f);
+	ImGui::DragFloat3("Bush Position", &bushMesh->position[0], 0.5f, -10.f, 10.f);
 	ImGui::DragFloat3("Light Position", &light[0], 0.05f, -1.025f, 1.025f);
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::Text("CurrentTime: %.3f seconds", STime::GetCurTime());

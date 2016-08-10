@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\Dependency\imgui\imgui_draw.cpp" />
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="ApplicationH.cpp" />
+    <ClCompile Include="BushMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLWindowH.cpp" />
     <ClCompile Include="ImGuiImpl.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="..\..\Dependency\imgui\imgui_internal.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="ApplicationH.h" />
+    <ClInclude Include="BushMesh.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GLWindowH.h" />
     <ClInclude Include="MeshActor.h" />
@@ -182,17 +184,20 @@
     <ClInclude Include="TexturedMesh.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\meshes\blend\BushA.blend" />
     <None Include="..\..\meshes\export\BeachSand.fbx" />
     <None Include="..\..\meshes\export\Cube.fbx" />
     <None Include="..\..\meshes\export\OceanGrid.fbx" />
-    <None Include="foliage.fs" />
-    <None Include="foliage.vs" />
     <None Include="Shaders\basic.fs" />
     <None Include="Shaders\basic.vs" />
+    <None Include="Shaders\foliage.fs" />
+    <None Include="Shaders\foliage.vs" />
     <None Include="Shaders\ocean.fs" />
     <None Include="Shaders\ocean.vs" />
     <None Include="Shaders\shadowmap.fs" />
     <None Include="Shaders\shadowmap.vs" />
+    <None Include="Shaders\smfoliage.fs" />
+    <None Include="Shaders\smfoliage.vs" />
     <None Include="Shaders\textured.fs" />
     <None Include="Shaders\textured.vs" />
   </ItemGroup>

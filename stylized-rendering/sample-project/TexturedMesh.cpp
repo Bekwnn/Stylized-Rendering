@@ -9,7 +9,7 @@ TexturedMesh::TexturedMesh() :
 {
 	specPow = 32.f;
 	specMul = 0.2f;
-	normalMapped = true;
+	normalMapped = false;
 }
 
 void TexturedMesh::GenBuffers()
@@ -37,14 +37,17 @@ void TexturedMesh::GenBuffers()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	
 	// NORMAL MAP
-	glActiveTexture(GL_TEXTURE1);
-	glGenTextures(1, &normalTexID);
-	glBindTexture(GL_TEXTURE_2D, normalTexID);
-	glTextureStorage2D(normalTexID, 1, GL_RGBA8_SNORM, normalTexture->x, normalTexture->y);
-	glTextureSubImage2D(normalTexID, 0, 0, 0, normalTexture->x, normalTexture->y, GL_RGBA, GL_UNSIGNED_BYTE, normalTexture->data);
+	if (normalMapped)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glGenTextures(1, &normalTexID);
+		glBindTexture(GL_TEXTURE_2D, normalTexID);
+		glTextureStorage2D(normalTexID, 1, GL_RGBA8_SNORM, normalTexture->x, normalTexture->y);
+		glTextureSubImage2D(normalTexID, 0, 0, 0, normalTexture->x, normalTexture->y, GL_RGBA, GL_UNSIGNED_BYTE, normalTexture->data);
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
 }
 
 void TexturedMesh::SetUniforms()

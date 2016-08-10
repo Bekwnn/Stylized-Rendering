@@ -41,18 +41,18 @@ void MeshActor::Render()
 
 void MeshActor::ShadowPass()
 {
-	if (!castsShadow) return;
-
-	glUseProgram(shadowProgram);
-
 	// Compute the MVP matrix from the light's point of view
-	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-40, 40, -40, 40, -40, 40);
+	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-25, 25, -25, 25, -25, 25);
 	glm::mat4 depthViewMatrix = glm::lookAt(scene->light, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	glm::mat4 depthModelMatrix = GetModelMatrix();
 	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix * depthModelMatrix;
 
 	// compute depthbiasMVP for actual shading step later
 	depthBiasMVP = biasMatrix*depthMVP;
+
+	if (!castsShadow) return;	//hop off here if we don't want this to cast shadows
+
+	glUseProgram(shadowProgram);
 
 	// set MVP in shadow shader
 	GLint depthMatrixID = glGetUniformLocation(shadowProgram, "depthMVP");
